@@ -1,0 +1,80 @@
+{
+  "learn1": {
+    "image": "images_learning/learn1_highlighted.png",
+    "title_en": "Suspicious Verification Email",
+    "title_ar": "رسالة تحقق مشبوهة",
+    "ai_intro_en": "Let’s analyse this email together.",
+    "ai_intro_ar": "دعنا نحلل هذه الرسالة معاً.",
+    "what_en": "The sender’s email address is not an official Microsoft or Outlook domain and contains a spelling mistake. The email also creates urgency, includes a suspicious attachment, and asks the user to verify their account through a link.",
+    "what_ar": "عنوان البريد الإلكتروني لا يتبع نطاق Microsoft أو Outlook الرسمي ويحتوي على خطأ إملائي. كما تستخدم الرسالة أسلوب الاستعجال، وتحتوي على مرفق مشبوه، وتطلب من المستخدم التحقق من الحساب عبر رابط.",
+    "risk_en": "The verification link may lead to a fake login page designed to steal account credentials, while the attached file could contain malicious content.",
+    "risk_ar": "قد يقود رابط التحقق إلى صفحة تسجيل دخول مزيفة لسرقة بيانات الحساب، كما قد يحتوي الملف المرفق على محتوى ضار.",
+    "tip_en": "Always check the sender’s address carefully, avoid opening unexpected attachments, and never click suspicious links.",
+    "tip_ar": "تحقق دائماً من عنوان المرسل، وتجنب فتح المرفقات غير المتوقعة، ولا تضغط على الروابط المشبوهة."
+  },
+  "learn2": {
+    "image": "images_learning/learn2_highlighted.png",
+    "title_en": "Suspicious Shared Document Email",
+    "title_ar": "رسالة مشاركة مستند مشبوهة",
+    "ai_intro_en": "Let’s analyse this shared document message together.",
+    "ai_intro_ar": "دعنا نحلل رسالة مشاركة المستند معاً.",
+    "what_en": "The document was shared using a personal Gmail address instead of an official organisational email. The message also encourages the user to open a sensitive financial document, which may be used to attract attention and increase interaction.",
+    "what_ar": "تمت مشاركة المستند باستخدام بريد Gmail شخصي بدلاً من بريد رسمي تابع لجهة موثوقة. كما أن الرسالة تتضمن مستنداً مالياً حساساً قد يُستخدم لجذب انتباه الضحية وزيادة احتمالية التفاعل معه.",
+    "risk_en": "Opening the shared document or clicking the Open button could expose the user to phishing pages, malicious links, or harmful files designed to steal information or compromise the device.",
+    "risk_ar": "قد يؤدي فتح المستند أو الضغط على زر فتح إلى توجيه المستخدم لصفحات تصيد أو روابط ضارة أو ملفات خبيثة تهدف إلى سرقة المعلومات أو اختراق الجهاز.",
+    "tip_en": "Always verify the sender’s identity before opening shared files, especially when the message contains sensitive or unexpected documents.",
+    "tip_ar": "تحقق دائماً من هوية المرسل قبل فتح الملفات المشتركة، خاصة إذا كانت الرسالة تحتوي على مستندات حساسة أو غير متوقعة."
+  },
+  "learn3": {
+    "image": "images_learning/learn3_highlighted.png",
+    "title_en": "Suspicious PayPal Invoice Email",
+    "title_ar": "رسالة فاتورةPayPal مشبوهة",
+    "ai_intro_en": "Let’s analyse this PayPal invoice email together.",
+    "ai_intro_ar": "دعنا نحلل رسالة فاتورة PayPal معاً.",
+    "what_en": "The email requests payment for an unexpected invoice worth 600 USD and encourages the recipient to take immediate action. It also includes a phone number that may connect the victim directly to scammers pretending to be PayPal support.",
+    "what_ar": "تطلب الرسالة دفع فاتورة غير متوقعة بقيمة 600 دولار أمريكي، وتحاول دفع المستلم للتصرف بسرعة. كما تحتوي على رقم هاتف قد يربط الضحية مباشرة بمحتالين ينتحلون صفة دعم PayPal.",
+    "risk_en": "Some scammers abuse legitimate services like PayPal to send fraudulent invoices. Calling the provided number or interacting with the invoice may expose the victim to financial fraud, credential theft, or social engineering attacks.",
+    "risk_ar": "يستغل بعض المحتالين خدمات حقيقية مثل PayPal لإرسال فواتير احتيالية. وقد يؤدي الاتصال بالرقم المرفق أو التفاعل مع الفاتورة إلى التعرض للاحتيال المالي أو سرقة البيانات أو هجمات الهندسة الاجتماعية.",
+    "tip_en": "Always verify unexpected invoices directly from your official PayPal account and never call phone numbers included in suspicious payment emails.",
+    "tip_ar": "تحقق دائماً من أي فاتورة غير متوقعة من خلال حساب PayPal الرسمي مباشرة، ولا تتصل بالأرقام الموجودة في رسائل الدفع المشبوهة."
+  },
+  "learn4": {
+    "image": "images_learning/learn4_highlighted.png",
+    "title_en": "Suspicious Shipping Invoice Email",
+    "title_ar": "رسالة فاتورة شحن مشبوهة",
+    "ai_intro_en": "Let’s analyse this shipping invoice email together.",
+    "ai_intro_ar": "دعنا نحلل رسالة فاتورة الشحن معاً.",
+    "what_en": "The email imitates a shipping company using a fake brand name similar to DHL, such as DHI. The sender’s domain is not official, and the message attempts to pressure the recipient into opening a shipping document or invoice link.",
+    "what_ar": "تحاول الرسالة انتحال شركة شحن معروفة باستخدام اسم مشابه لـ DHL مثل DHI. كما أن نطاق البريد الإلكتروني غير رسمي، وتحاول الرسالة دفع المستلم لفتح رابط خاص بمستند أو فاتورة شحن.",
+    "risk_en": "Attackers often use fake shipping notifications and invoices to trick users into clicking malicious links, downloading harmful files, or visiting phishing websites designed to steal information.",
+    "risk_ar": "يستخدم المهاجمون إشعارات الشحن والفواتير المزيفة لخداع المستخدمين ودفعهم إلى الضغط على روابط ضارة أو تحميل ملفات خبيثة أو زيارة مواقع تصيد تهدف إلى سرقة المعلومات.",
+    "tip_en": "Always verify shipping emails carefully, especially when they contain unexpected invoices, suspicious links, or domains that imitate trusted companies.",
+    "tip_ar": "تحقق دائماً من رسائل الشحن بعناية، خاصة إذا كانت تحتوي على فواتير غير متوقعة أو روابط مشبوهة أو نطاقات تقلد شركات موثوقة."
+  },
+  "learn5": {
+    "image": "images_learning/learn5_highlighted.png",
+    "title_en": "Suspicious Google Calendar Invitation",
+    "title_ar": "دعوة مشبوهة من تقويم Google",
+    "ai_intro_en": "Let’s analyse this calendar invitation together.",
+    "ai_intro_ar": "دعنا نحلل دعوة التقويم معاً.",
+    "what_en": "The invitation uses a promotional account name such as pixel-giveaway and promises a free Pixel 7 Pro device to attract the recipient’s attention and encourage interaction.",
+    "what_ar": "تستخدم الدعوة اسماً ترويجياً مثل pixel-giveaway وتعرض الحصول على هاتف Pixel 7 Pro مجاناً لجذب انتباه المستلم ودفعه للتفاعل مع الدعوة.",
+    "risk_en": "Attackers may abuse trusted services such as Google Calendar to send misleading invitations containing phishing links, fake offers, or malicious content designed to steal information.",
+    "risk_ar": "قد يستغل المهاجمون خدمات موثوقة مثل تقويم Google لإرسال دعوات مضللة تحتوي على روابط تصيد أو عروض وهمية أو محتوى ضار يهدف إلى سرقة المعلومات.",
+    "tip_en": "Be cautious of calendar invitations that contain unexpected prizes, promotional offers, or requests to interact with unknown events.",
+    "tip_ar": "كن حذراً من دعوات التقويم التي تتضمن جوائز غير متوقعة أو عروضاً ترويجية أو تطلب التفاعل مع أحداث غير معروفة."
+  },
+  "learn6": {
+    "image": "images_learning/learn6_highlighted.png",
+    "title_en": "Suspicious Delivery Payment Message",
+    "title_ar": "رسالة دفع شحنة مشبوهة",
+    "ai_intro_en": "Let’s analyse this delivery payment message together.",
+    "ai_intro_ar": "دعنا نحلل رسالة دفع الشحنة معاً.",
+    "what_en": "The message uses an unknown international phone number while pretending to represent Saudi Post. It also pressures the user to make an urgent payment and includes a shortened suspicious link.",
+    "what_ar": "تستخدم الرسالة رقم هاتف دولياً غير معروف مع انتحال صفة البريد السعودي. كما تضغط على المستخدم لإجراء دفعة عاجلة وتحتوي على رابط مختصر مشبوه.",
+    "risk_en": "Phishing messages often imitate delivery companies and use urgent payment requests to pressure users into clicking malicious links or entering payment information. Shortened links may hide phishing websites designed to steal personal or financial information.",
+    "risk_ar": "غالباً ما تنتحل رسائل التصيد صفة شركات الشحن وتستخدم طلبات الدفع العاجلة للضغط على المستخدم ودفعه إلى الضغط على روابط ضارة أو إدخال معلومات الدفع. كما قد تخفي الروابط المختصرة مواقع تصيد تهدف إلى سرقة البيانات الشخصية أو المالية.",
+    "tip_en": "Always verify delivery payment requests through official company websites or applications, and avoid opening shortened links received through unexpected messages.",
+    "tip_ar": "تحقق دائماً من طلبات دفع الشحنات عبر المواقع أو التطبيقات الرسمية للشركات، وتجنب فتح الروابط المختصرة المرسلة عبر رسائل غير متوقعة."
+  }
+}

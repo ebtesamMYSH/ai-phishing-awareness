@@ -1,0 +1,42 @@
+[
+  {
+    "image": "test1.png",
+    "correct_answer": "Phishing"
+  },
+  {
+    "image": "test2.png",
+    "correct_answer": "Legitimate"
+  },
+  {
+    "image": "test3.png",
+    "correct_answer": "Phishing"
+  },
+  {
+    "image": "test4.png",
+    "correct_answer": "Legitimate"
+  },
+  {
+    "image": "test5.png",
+    "correct_answer": "Phishing"
+  },
+  {
+    "image": "test6.png",
+    "correct_answer": "Legitimate"
+  },
+  {
+    "image": "test7.png",
+    "correct_answer": "Phishing"
+  },
+  {
+    "image": "test8.png",
+    "correct_answer": "Legitimate"
+  },
+  {
+    "image": "test9.png",
+    "correct_answer": "Phishing"
+  },
+  {
+    "image": "test10.png",
+    "correct_answer": "Phishing"
+  }
+]
