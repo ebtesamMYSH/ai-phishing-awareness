@@ -5,7 +5,11 @@ import time
 from datetime import datetime
 import pandas as pd
 
-st.set_page_config(page_title="AI Tutor Phishing Awareness Training", layout="wide")
+st.set_page_config(
+    page_title="AI Tutor Phishing Awareness Training",
+    layout="centered",
+    initial_sidebar_state="collapsed"
+)
 
 with open("training_content.json", "r", encoding="utf-8") as f:
     training = json.load(f)
@@ -49,6 +53,13 @@ def t(en, ar):
 
 def get_language_label():
     return "Arabic" if st.session_state.language == "ar" else "English"
+
+
+def show_image(path):
+    try:
+        st.image(path, use_container_width=True)
+    except TypeError:
+        st.image(path, use_column_width=True)
 
 
 def get_next_participant_id(filename):
@@ -155,43 +166,19 @@ def apply_global_style():
     st.markdown(
         f"""
         <style>
-
-        #MainMenu {{
+        #MainMenu, footer, header {{
             visibility: hidden;
         }}
 
-        footer {{
-            visibility: hidden;
-        }}
-
-        header {{
-            visibility: hidden;
-        }}
-
-        [data-testid="stToolbar"] {{
-            display: none;
-        }}
-
-        [data-testid="stDecoration"] {{
-            display: none;
-        }}
-
-        [data-testid="stStatusWidget"] {{
-            visibility: hidden;
-            height: 0%;
-            position: fixed;
-        }}
-
-        .viewerBadge_container__1QSob {{
-            display: none;
-        }}
-
-        .styles_viewerBadge__1yB5_ {{
-            display: none;
-        }}
-
+        [data-testid="stToolbar"],
+        [data-testid="stDecoration"],
+        [data-testid="stStatusWidget"],
+        .viewerBadge_container__1QSob,
+        .styles_viewerBadge__1yB5_,
         .viewerBadge_link__1S137 {{
-            display: none;
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
         }}
 
         .stApp {{
@@ -200,25 +187,34 @@ def apply_global_style():
         }}
 
         .block-container {{
-            padding-top: 3rem;
-            max-width: 1100px;
+            padding-top: 2rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            max-width: 1120px;
         }}
 
-        h1, h2, h3, p, label, div {{
+        h1, h2, h3, h4, p, label, div {{
             text-align: {align};
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+        }}
+
+        img {{
+            max-width: 100% !important;
+            height: auto !important;
         }}
 
         .main-title {{
             color: #123B73;
-            font-size: 2.4rem;
+            font-size: clamp(1.7rem, 5vw, 2.4rem);
             font-weight: 800;
-            line-height: 1.25;
+            line-height: 1.3;
             margin-bottom: 0.8rem;
         }}
 
         .intro-text {{
             color: #475569;
-            font-size: 1.05rem;
+            font-size: clamp(0.95rem, 3.5vw, 1.05rem);
             line-height: 1.7;
             max-width: 850px;
         }}
@@ -254,7 +250,7 @@ def apply_global_style():
             box-shadow: 0 8px 28px rgba(18, 59, 115, 0.08);
             text-align: center !important;
             max-width: 760px;
-            margin: 3rem auto 1.5rem auto;
+            margin: 2rem auto 1.5rem auto;
         }}
 
         .center-card * {{
@@ -268,7 +264,7 @@ def apply_global_style():
 
         .completion-title {{
             color: #123B73;
-            font-size: 1.7rem;
+            font-size: clamp(1.3rem, 5vw, 1.7rem);
             font-weight: 800;
             margin-bottom: 0.5rem;
         }}
@@ -301,6 +297,8 @@ def apply_global_style():
             border: 1px solid #CBD5E1;
             padding: 0.55rem 1.1rem;
             font-weight: 600;
+            white-space: normal !important;
+            min-height: 44px;
         }}
 
         .stButton > button:hover {{
@@ -308,6 +306,73 @@ def apply_global_style():
             color: #123B73;
         }}
 
+        textarea {{
+            min-height: 120px !important;
+        }}
+
+        @media (max-width: 768px) {{
+            .block-container {{
+                padding-top: 1rem;
+                padding-left: 0.8rem;
+                padding-right: 0.8rem;
+                max-width: 100%;
+            }}
+
+            .welcome-card {{
+                padding: 1.4rem 1rem;
+                border-radius: 16px;
+            }}
+
+            .center-card {{
+                padding: 1.7rem 1rem;
+                margin-top: 1rem;
+            }}
+
+            .privacy-box {{
+                padding: 1rem;
+            }}
+
+            [data-testid="stHorizontalBlock"] {{
+                flex-direction: column !important;
+                gap: 0.75rem !important;
+            }}
+
+            [data-testid="column"] {{
+                width: 100% !important;
+                flex: 1 1 100% !important;
+                min-width: 100% !important;
+            }}
+
+            .stButton > button {{
+                width: 100% !important;
+                font-size: 0.95rem !important;
+            }}
+
+            div[role="radiogroup"] {{
+                gap: 0.5rem !important;
+            }}
+
+            div[role="radiogroup"] label {{
+                margin-bottom: 0.4rem !important;
+            }}
+
+            h1 {{
+                font-size: 1.8rem !important;
+                line-height: 1.3 !important;
+            }}
+
+            h2 {{
+                font-size: 1.5rem !important;
+            }}
+
+            h3 {{
+                font-size: 1.25rem !important;
+            }}
+
+            p, div, label {{
+                font-size: 0.98rem;
+            }}
+        }}
         </style>
         """,
         unsafe_allow_html=True
@@ -347,14 +412,14 @@ def welcome_page():
         unsafe_allow_html=True
     )
 
-    col1, col2, col3 = st.columns([1, 1, 4])
+    lang_col1, lang_col2 = st.columns(2)
 
-    with col1:
+    with lang_col1:
         if st.button("English"):
             st.session_state.language = "en"
             rerun_app()
 
-    with col2:
+    with lang_col2:
         if st.button("العربية"):
             st.session_state.language = "ar"
             rerun_app()
@@ -387,7 +452,7 @@ def welcome_page():
     selected_role = st.radio(
         "",
         displayed_roles,
-        horizontal=True,
+        horizontal=False,
         label_visibility="collapsed"
     )
 
@@ -410,10 +475,10 @@ def learning_page():
         f"مثال {st.session_state.learn_index + 1} من {len(keys)}"
     ))
 
-    col1, col2 = st.columns([1.5, 1])
+    col1, col2 = st.columns([1.45, 1])
 
     with col1:
-        st.image(item["image"], use_column_width=True)
+        show_image(item["image"])
 
     with col2:
         st.subheader(t(item["title_en"], item["title_ar"]))
@@ -490,10 +555,8 @@ def learning_complete_page():
         unsafe_allow_html=True
     )
 
-    col1, col2, col3 = st.columns([2, 1, 2])
-    with col2:
-        if st.button(t("Continue to Assessment", "الانتقال إلى الاختبار")):
-            next_page("post_test")
+    if st.button(t("Continue to Assessment", "الانتقال إلى الاختبار")):
+        next_page("post_test")
 
 
 def post_test_page():
@@ -513,7 +576,7 @@ def post_test_page():
     ))
 
     if st.session_state.zoom_image:
-        st.image(image_path, use_column_width=True)
+        show_image(image_path)
 
         if st.button(t("↙ Return to normal size", "↙ الرجوع للحجم الطبيعي")):
             st.session_state.zoom_image = False
@@ -521,10 +584,10 @@ def post_test_page():
 
         return
 
-    col1, col2 = st.columns([2.2, 1])
+    col1, col2 = st.columns([1.55, 1])
 
     with col1:
-        st.image(image_path, use_column_width=True)
+        show_image(image_path)
 
         if st.button(t("🔍 View larger image", "🔍 عرض الصورة بحجم أكبر")):
             st.session_state.zoom_image = True
