@@ -167,7 +167,8 @@ def apply_global_style():
         f"""
         <style>
         #MainMenu, footer, header {{
-            visibility: hidden;
+            visibility: hidden !important;
+            display: none !important;
         }}
 
         [data-testid="stToolbar"],
@@ -175,10 +176,13 @@ def apply_global_style():
         [data-testid="stStatusWidget"],
         .viewerBadge_container__1QSob,
         .styles_viewerBadge__1yB5_,
-        .viewerBadge_link__1S137 {{
+        .viewerBadge_link__1S137,
+        a[href*="github.com"] {{
             display: none !important;
             visibility: hidden !important;
+            opacity: 0 !important;
             height: 0 !important;
+            width: 0 !important;
         }}
 
         .stApp {{
@@ -193,10 +197,12 @@ def apply_global_style():
             max-width: 1120px;
         }}
 
-        h1, h2, h3, h4, p, label, div {{
+        h1, h2, h3, h4, p, label, div, span {{
             text-align: {align};
             overflow-wrap: break-word;
             word-wrap: break-word;
+            color: #111827;
+            opacity: 1;
         }}
 
         img {{
@@ -205,7 +211,7 @@ def apply_global_style():
         }}
 
         .main-title {{
-            color: #123B73;
+            color: #123B73 !important;
             font-size: clamp(1.7rem, 5vw, 2.4rem);
             font-weight: 800;
             line-height: 1.3;
@@ -213,7 +219,7 @@ def apply_global_style():
         }}
 
         .intro-text {{
-            color: #475569;
+            color: #475569 !important;
             font-size: clamp(0.95rem, 3.5vw, 1.05rem);
             line-height: 1.7;
             max-width: 850px;
@@ -229,7 +235,7 @@ def apply_global_style():
         }}
 
         .section-label {{
-            color: #123B73;
+            color: #123B73 !important;
             font-weight: 700;
             font-size: 1.15rem;
             margin-top: 1.2rem;
@@ -237,7 +243,7 @@ def apply_global_style():
         }}
 
         .helper-text {{
-            color: #4B5563;
+            color: #4B5563 !important;
             font-size: 0.95rem;
             margin-bottom: 1rem;
         }}
@@ -263,14 +269,14 @@ def apply_global_style():
         }}
 
         .completion-title {{
-            color: #123B73;
+            color: #123B73 !important;
             font-size: clamp(1.3rem, 5vw, 1.7rem);
             font-weight: 800;
             margin-bottom: 0.5rem;
         }}
 
         .completion-text {{
-            color: #475569;
+            color: #475569 !important;
             font-size: 1.05rem;
             line-height: 1.7;
         }}
@@ -282,7 +288,7 @@ def apply_global_style():
             padding: 1rem 1.3rem;
             max-width: 760px;
             margin: 1rem auto;
-            color: #334155;
+            color: #334155 !important;
             font-size: 0.95rem;
             line-height: 1.6;
             box-shadow: 0 4px 16px rgba(18, 59, 115, 0.05);
@@ -293,72 +299,110 @@ def apply_global_style():
         }}
 
         .stButton > button {{
-            border-radius: 10px;
-            border: 1px solid #CBD5E1;
-            padding: 0.55rem 1.1rem;
-            font-weight: 600;
+            background-color: #FFFFFF !important;
+            color: #111827 !important;
+            border-radius: 12px !important;
+            border: 1px solid #CBD5E1 !important;
+            padding: 0.65rem 1.1rem !important;
+            font-weight: 600 !important;
             white-space: normal !important;
-            min-height: 44px;
+            min-height: 48px !important;
         }}
 
         .stButton > button:hover {{
-            border-color: #123B73;
-            color: #123B73;
+            border-color: #123B73 !important;
+            color: #123B73 !important;
+        }}
+
+        .stButton > button[kind="primary"] {{
+            background-color: #123B73 !important;
+            color: #FFFFFF !important;
+            border-color: #123B73 !important;
+        }}
+
+        .stRadio label,
+        .stRadio div,
+        .stRadio span,
+        .stRadio p,
+        [data-testid="stMarkdownContainer"],
+        [data-testid="stWidgetLabel"],
+        label {{
+            color: #111827 !important;
+            opacity: 1 !important;
+        }}
+
+        div[role="radiogroup"] label {{
+            background: #FFFFFF !important;
+            border: 1px solid #CBD5E1 !important;
+            border-radius: 12px !important;
+            padding: 0.8rem 1rem !important;
+            margin-bottom: 0.7rem !important;
+            width: 100% !important;
         }}
 
         textarea {{
             min-height: 120px !important;
+            color: #111827 !important;
+            background-color: #FFFFFF !important;
+        }}
+
+        input {{
+            color: #111827 !important;
+            background-color: #FFFFFF !important;
         }}
 
         @media (max-width: 768px) {{
             .block-container {{
-                padding-top: 1rem;
-                padding-left: 0.8rem;
-                padding-right: 0.8rem;
-                max-width: 100%;
+                padding-top: 1rem !important;
+                padding-left: 0.8rem !important;
+                padding-right: 0.8rem !important;
+                max-width: 100% !important;
+            }}
+
+            .main-title {{
+                font-size: 2rem !important;
+                line-height: 1.35 !important;
+            }}
+
+            .intro-text {{
+                font-size: 1.02rem !important;
+                line-height: 1.8 !important;
             }}
 
             .welcome-card {{
-                padding: 1.4rem 1rem;
-                border-radius: 16px;
+                padding: 1.3rem !important;
+                border-radius: 16px !important;
             }}
 
             .center-card {{
-                padding: 1.7rem 1rem;
-                margin-top: 1rem;
+                padding: 1.4rem !important;
+                margin-top: 1rem !important;
             }}
 
             .privacy-box {{
-                padding: 1rem;
+                padding: 1rem !important;
             }}
 
             [data-testid="stHorizontalBlock"] {{
                 flex-direction: column !important;
-                gap: 0.75rem !important;
+                gap: 0.8rem !important;
             }}
 
             [data-testid="column"] {{
                 width: 100% !important;
-                flex: 1 1 100% !important;
                 min-width: 100% !important;
+                flex: 1 1 100% !important;
             }}
 
             .stButton > button {{
                 width: 100% !important;
-                font-size: 0.95rem !important;
-            }}
-
-            div[role="radiogroup"] {{
-                gap: 0.5rem !important;
-            }}
-
-            div[role="radiogroup"] label {{
-                margin-bottom: 0.4rem !important;
+                margin-bottom: 0.6rem !important;
+                font-size: 1rem !important;
             }}
 
             h1 {{
-                font-size: 1.8rem !important;
-                line-height: 1.3 !important;
+                font-size: 1.9rem !important;
+                line-height: 1.35 !important;
             }}
 
             h2 {{
@@ -369,8 +413,13 @@ def apply_global_style():
                 font-size: 1.25rem !important;
             }}
 
-            p, div, label {{
-                font-size: 0.98rem;
+            p, div, label, span {{
+                font-size: 1rem !important;
+                line-height: 1.7 !important;
+            }}
+
+            img {{
+                border-radius: 12px !important;
             }}
         }}
         </style>
@@ -452,14 +501,24 @@ def welcome_page():
     selected_role = st.radio(
         "",
         displayed_roles,
+        index=None,
         horizontal=False,
         label_visibility="collapsed"
     )
 
-    st.session_state.role = role_map[selected_role]
+    if selected_role:
+        st.session_state.role = role_map[selected_role]
 
     if st.button(t("Start Training", "ابدأ التدريب")):
-        next_page("learning")
+        if not st.session_state.role:
+            st.warning(
+                t(
+                    "Please select your role before starting.",
+                    "يرجى اختيار مجال عملك قبل البدء."
+                )
+            )
+        else:
+            next_page("learning")
 
 
 def learning_page():
