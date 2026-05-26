@@ -186,6 +186,33 @@ def apply_global_style():
             pointer-events: none !important;
         }}
 
+        /* Hide bottom floating Streamlit/GitHub badges */
+        div[style*="position: fixed"][style*="bottom"],
+        div[style*="position:fixed"][style*="bottom"],
+        div[style*="z-index: 999"],
+        div[style*="z-index:999"],
+        .st-emotion-cache-1dp5vir,
+        .st-emotion-cache-1wbqy5l,
+        .st-emotion-cache-czk5ss {{
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }}
+
+        /* Hide dark fullscreen square on images */
+        [data-testid="StyledFullScreenButton"],
+        [data-testid="stImage"] button,
+        button[title*="fullscreen"],
+        button[title*="Fullscreen"],
+        button[aria-label*="fullscreen"],
+        button[aria-label*="Fullscreen"] {{
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }}
+
         .stApp {{
             background: linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 100%) !important;
             direction: {direction};
@@ -302,6 +329,10 @@ def apply_global_style():
             text-align: center !important;
         }}
 
+        .stButton {{
+            text-align: center !important;
+        }}
+
         .stButton > button {{
             background-color: #FFFFFF !important;
             color: #111827 !important;
@@ -376,8 +407,15 @@ def apply_global_style():
                 flex: 1 1 100% !important;
             }}
 
+            .stButton {{
+                text-align: center !important;
+            }}
+
             .stButton > button {{
-                width: 100% !important;
+                width: auto !important;
+                min-width: 130px !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
                 margin-bottom: 0.6rem !important;
                 font-size: 1rem !important;
             }}
@@ -516,23 +554,26 @@ def welcome_page():
         else:
             st.session_state.role = ""
 
-    if st.button(t("Start Training", "ابدأ التدريب")):
-        if not st.session_state.role_choice:
-            st.warning(
-                t(
-                    "Please select your role before starting.",
-                    "يرجى اختيار مجال عملك قبل البدء."
+    start_col1, start_col2, start_col3 = st.columns([1, 1, 1])
+
+    with start_col2:
+        if st.button(t("Start Training", "ابدأ التدريب")):
+            if not st.session_state.role_choice:
+                st.warning(
+                    t(
+                        "Please select your role before starting.",
+                        "يرجى اختيار مجال عملك قبل البدء."
+                    )
                 )
-            )
-        elif st.session_state.role_choice == "Other" and not st.session_state.other_role_text:
-            st.warning(
-                t(
-                    "Please write your role before starting.",
-                    "يرجى كتابة مجال عملك قبل البدء."
+            elif st.session_state.role_choice == "Other" and not st.session_state.other_role_text:
+                st.warning(
+                    t(
+                        "Please write your role before starting.",
+                        "يرجى كتابة مجال عملك قبل البدء."
+                    )
                 )
-            )
-        else:
-            next_page("learning")
+            else:
+                next_page("learning")
 
 
 def learning_page():
