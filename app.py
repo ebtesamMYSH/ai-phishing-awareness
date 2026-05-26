@@ -100,6 +100,7 @@ def save_participant_summary():
         st.session_state.participant_id = get_next_participant_id(csv_filename)
 
     responses = st.session_state.responses
+
     total_score_10 = sum(1 for r in responses if r["is_correct"])
 
     phishing_score_6 = sum(
@@ -192,7 +193,10 @@ def apply_global_style():
         div[style*="z-index:999"],
         .st-emotion-cache-1dp5vir,
         .st-emotion-cache-1wbqy5l,
-        .st-emotion-cache-czk5ss {{
+        .st-emotion-cache-czk5ss,
+        .st-emotion-cache-13ln4jf,
+        .st-emotion-cache-1avcm0n,
+        .st-emotion-cache-1n76uvr {{
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
@@ -368,6 +372,15 @@ def apply_global_style():
             background-color: #FFFFFF !important;
         }}
 
+        .start-training-wrap {{
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+            margin-top: 1rem !important;
+            margin-bottom: 1rem !important;
+        }}
+
         @media (max-width: 768px) {{
             .block-container {{
                 padding-top: 1rem !important;
@@ -400,33 +413,19 @@ def apply_global_style():
                 padding: 1rem !important;
             }}
 
-            [data-testid="stHorizontalBlock"] {{
-                flex-direction: column !important;
-                gap: 0.8rem !important;
+            .stButton > button {{
+                margin-bottom: 0.6rem !important;
+                font-size: 1rem !important;
             }}
 
-            [data-testid="column"] {{
-                width: 100% !important;
-                min-width: 100% !important;
-                flex: 1 1 100% !important;
-            }}
-
-            div[data-testid="stButton"] {{
+            #start-training-area + div[data-testid="stButton"],
+            #start-training-area + div[data-testid="stButton"] > button {{
                 display: flex !important;
                 justify-content: center !important;
-                align-items: center !important;
-                width: 100% !important;
-            }}
-
-            div[data-testid="stButton"] > button {{
-                width: auto !important;
-                min-width: 130px !important;
-                max-width: 260px !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
-                margin-bottom: 0.6rem !important;
-                display: block !important;
-                font-size: 1rem !important;
+                width: 180px !important;
+                max-width: 220px !important;
             }}
 
             h1 {{
@@ -558,25 +557,28 @@ def welcome_page():
         else:
             st.session_state.role = ""
 
-    st.markdown("<div style='height: 0.8rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div id='start-training-area'></div>", unsafe_allow_html=True)
 
-    if st.button(t("Start Training", "ابدأ التدريب"), key="start_training_button"):
-        if not st.session_state.role_choice:
-            st.warning(
-                t(
-                    "Please select your role before starting.",
-                    "يرجى اختيار مجال عملك قبل البدء."
+    start_left, start_mid, start_right = st.columns([2, 1.4, 2])
+
+    with start_mid:
+        if st.button(t("Start Training", "ابدأ التدريب"), key="start_training_button"):
+            if not st.session_state.role_choice:
+                st.warning(
+                    t(
+                        "Please select your role before starting.",
+                        "يرجى اختيار مجال عملك قبل البدء."
+                    )
                 )
-            )
-        elif st.session_state.role_choice == "Other" and not st.session_state.other_role_text:
-            st.warning(
-                t(
-                    "Please write your role before starting.",
-                    "يرجى كتابة مجال عملك قبل البدء."
+            elif st.session_state.role_choice == "Other" and not st.session_state.other_role_text:
+                st.warning(
+                    t(
+                        "Please write your role before starting.",
+                        "يرجى كتابة مجال عملك قبل البدء."
+                    )
                 )
-            )
-        else:
-            next_page("learning")
+            else:
+                next_page("learning")
 
 
 def learning_page():
