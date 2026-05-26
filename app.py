@@ -17,22 +17,22 @@ with open("training_content.json", "r", encoding="utf-8") as f:
 with open("test_content.json", "r", encoding="utf-8") as f:
     test_items = json.load(f)
 
-if "page" not in st.session_state:
-    st.session_state.page = "welcome"
-if "language" not in st.session_state:
-    st.session_state.language = "en"
-if "role" not in st.session_state:
-    st.session_state.role = ""
-if "learn_index" not in st.session_state:
-    st.session_state.learn_index = 0
-if "test_index" not in st.session_state:
-    st.session_state.test_index = 0
-if "responses" not in st.session_state:
-    st.session_state.responses = []
-if "participant_id" not in st.session_state:
-    st.session_state.participant_id = ""
-if "zoom_image" not in st.session_state:
-    st.session_state.zoom_image = False
+defaults = {
+    "page": "welcome",
+    "language": "en",
+    "role": "",
+    "role_choice": "",
+    "other_role_text": "",
+    "learn_index": 0,
+    "test_index": 0,
+    "responses": [],
+    "participant_id": "",
+    "zoom_image": False
+}
+
+for key, value in defaults.items():
+    if key not in st.session_state:
+        st.session_state[key] = value
 
 
 def rerun_app():
@@ -84,8 +84,7 @@ def get_next_participant_id(filename):
         if not numbers:
             return "P001"
 
-        next_number = max(numbers) + 1
-        return f"P{next_number:03d}"
+        return f"P{max(numbers) + 1:03d}"
 
     except Exception:
         return "P001"
@@ -100,9 +99,7 @@ def save_participant_summary():
     if not st.session_state.participant_id:
         st.session_state.participant_id = get_next_participant_id(csv_filename)
 
-    completed_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     responses = st.session_state.responses
-
     total_score_10 = sum(1 for r in responses if r["is_correct"])
 
     phishing_score_6 = sum(
@@ -115,13 +112,9 @@ def save_participant_summary():
         if r["correct_answer"] == "Legitimate" and r["is_correct"]
     )
 
-    overall_percentage = round((total_score_10 / 10) * 100, 2)
-    phishing_percentage = round((phishing_score_6 / 6) * 100, 2)
-    legitimate_percentage = round((legitimate_score_4 / 4) * 100, 2)
-
     row = {
         "participant_id": st.session_state.participant_id,
-        "completed_time": completed_time,
+        "completed_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "language": get_language_label(),
         "role": st.session_state.role,
         "learning_completed": "Yes"
@@ -139,9 +132,9 @@ def save_participant_summary():
     row["total_score_10"] = total_score_10
     row["phishing_score_6"] = phishing_score_6
     row["legitimate_score_4"] = legitimate_score_4
-    row["overall_percentage"] = overall_percentage
-    row["phishing_percentage"] = phishing_percentage
-    row["legitimate_percentage"] = legitimate_percentage
+    row["overall_percentage"] = round((total_score_10 / 10) * 100, 2)
+    row["phishing_percentage"] = round((phishing_score_6 / 6) * 100, 2)
+    row["legitimate_percentage"] = round((legitimate_score_4 / 4) * 100, 2)
 
     new_row_df = pd.DataFrame([row])
 
@@ -166,7 +159,6 @@ def apply_global_style():
     st.markdown(
         f"""
         <style>
-        /* Hide Streamlit default UI */
         #MainMenu,
         footer,
         header,
@@ -184,21 +176,14 @@ def apply_global_style():
         .viewerBadge_link,
         .viewerBadge,
         a[href*="github.com"],
-        a[href*="streamlit.io"] {{
-            display: none !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            height: 0 !important;
-            width: 0 !important;
-            pointer-events: none !important;
-        }}
-
+        a[href*="streamlit.io"],
         iframe {{
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
             height: 0 !important;
             width: 0 !important;
+            pointer-events: none !important;
         }}
 
         .stApp {{
@@ -317,7 +302,6 @@ def apply_global_style():
             text-align: center !important;
         }}
 
-        /* Buttons */
         .stButton > button {{
             background-color: #FFFFFF !important;
             color: #111827 !important;
@@ -334,57 +318,6 @@ def apply_global_style():
             border-color: #123B73 !important;
             color: #123B73 !important;
             background-color: #F8FBFF !important;
-        }}
-
-        .stButton > button[kind="primary"] {{
-            background-color: #123B73 !important;
-            color: #FFFFFF !important;
-            border-color: #123B73 !important;
-        }}
-
-        .stButton > button[kind="primary"]:hover {{
-            background-color: #0E2F5C !important;
-            color: #FFFFFF !important;
-            border-color: #0E2F5C !important;
-        }}
-
-        /* Radio: make options readable and remove weird dark mobile styling */
-        .stRadio label,
-        .stRadio div,
-        .stRadio span,
-        .stRadio p,
-        [data-testid="stMarkdownContainer"],
-        [data-testid="stWidgetLabel"],
-        label {{
-            color: #111827 !important;
-            opacity: 1 !important;
-        }}
-
-        div[role="radiogroup"] {{
-            gap: 0.65rem !important;
-        }}
-
-        div[role="radiogroup"] label {{
-            background: #FFFFFF !important;
-            border: 1px solid #CBD5E1 !important;
-            border-radius: 12px !important;
-            padding: 0.8rem 1rem !important;
-            margin-bottom: 0.65rem !important;
-            width: 100% !important;
-            color: #111827 !important;
-            opacity: 1 !important;
-            box-shadow: none !important;
-        }}
-
-        div[role="radiogroup"] label * {{
-            color: #111827 !important;
-            opacity: 1 !important;
-        }}
-
-        div[role="radiogroup"] svg {{
-            color: #111827 !important;
-            fill: #111827 !important;
-            opacity: 1 !important;
         }}
 
         textarea {{
@@ -473,18 +406,28 @@ def apply_global_style():
                 filter: none !important;
                 -webkit-filter: none !important;
             }}
-
-            .stImage,
-            [data-testid="stImage"] {{
-                opacity: 1 !important;
-                filter: none !important;
-                -webkit-filter: none !important;
-            }}
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
+
+
+def set_role(role_value):
+    st.session_state.role_choice = role_value
+    if role_value != "Other":
+        st.session_state.role = role_value
+    else:
+        st.session_state.role = ""
+    rerun_app()
+
+
+def role_button(label, value):
+    selected = st.session_state.role_choice == value
+    display_label = f"✓ {label}" if selected else label
+
+    if st.button(display_label, key=f"role_{value}"):
+        set_role(value)
 
 
 def welcome_page():
@@ -541,39 +484,51 @@ def welcome_page():
         unsafe_allow_html=True
     )
 
-    role_options_en = ["Clinical", "Admin / Management", "IT / Informatics", "Other"]
-    role_options_ar = ["سريري", "إداري / إدارة", "تقنية المعلومات", "أخرى"]
+    if st.session_state.language == "ar":
+        role_labels = [
+            ("سريري", "Clinical"),
+            ("إداري / إدارة", "Admin / Management"),
+            ("تقنية المعلومات", "IT / Informatics"),
+            ("أخرى", "Other")
+        ]
+    else:
+        role_labels = [
+            ("Clinical", "Clinical"),
+            ("Admin / Management", "Admin / Management"),
+            ("IT / Informatics", "IT / Informatics"),
+            ("Other", "Other")
+        ]
 
-    role_map = {
-        "Clinical": "Clinical",
-        "Admin / Management": "Admin / Management",
-        "IT / Informatics": "IT / Informatics",
-        "Other": "Other",
-        "سريري": "Clinical",
-        "إداري / إدارة": "Admin / Management",
-        "تقنية المعلومات": "IT / Informatics",
-        "أخرى": "Other"
-    }
+    for label, value in role_labels:
+        role_button(label, value)
 
-    displayed_roles = role_options_ar if st.session_state.language == "ar" else role_options_en
+    if st.session_state.role_choice == "Other":
+        other_text = st.text_input(
+            t("Please specify your role", "يرجى كتابة مجال عملك"),
+            value=st.session_state.other_role_text,
+            key="other_role_input"
+        )
 
-    selected_role = st.radio(
-        "",
-        displayed_roles,
-        index=None,
-        horizontal=False,
-        label_visibility="collapsed"
-    )
+        st.session_state.other_role_text = other_text.strip()
 
-    if selected_role:
-        st.session_state.role = role_map[selected_role]
+        if st.session_state.other_role_text:
+            st.session_state.role = f"Other: {st.session_state.other_role_text}"
+        else:
+            st.session_state.role = ""
 
     if st.button(t("Start Training", "ابدأ التدريب")):
-        if not st.session_state.role:
+        if not st.session_state.role_choice:
             st.warning(
                 t(
                     "Please select your role before starting.",
                     "يرجى اختيار مجال عملك قبل البدء."
+                )
+            )
+        elif st.session_state.role_choice == "Other" and not st.session_state.other_role_text:
+            st.warning(
+                t(
+                    "Please write your role before starting.",
+                    "يرجى كتابة مجال عملك قبل البدء."
                 )
             )
         else:
@@ -677,6 +632,12 @@ def learning_complete_page():
         next_page("post_test")
 
 
+def set_test_choice(choice):
+    choice_key = f"selected_choice_{st.session_state.test_index}"
+    st.session_state[choice_key] = choice
+    rerun_app()
+
+
 def post_test_page():
     item = test_items[st.session_state.test_index]
     image_path = os.path.join("images_test", item["image"])
@@ -716,28 +677,16 @@ def post_test_page():
             f"### {t('Is this message phishing or legitimate?', 'هل هذه الرسالة تصيد إلكتروني أم رسالة شرعية؟')}"
         )
 
-        phishing_selected = st.session_state[choice_key] == "Phishing"
-        legitimate_selected = st.session_state[choice_key] == "Legitimate"
+        selected_choice = st.session_state[choice_key]
 
-        b1, b2 = st.columns(2)
+        phishing_label = t("✓ Phishing", "✓ تصيد إلكتروني") if selected_choice == "Phishing" else t("Phishing", "تصيد إلكتروني")
+        legitimate_label = t("✓ Legitimate", "✓ رسالة شرعية") if selected_choice == "Legitimate" else t("Legitimate", "رسالة شرعية")
 
-        with b1:
-            if st.button(
-                t("Phishing", "تصيد إلكتروني"),
-                key=f"phishing_btn_{st.session_state.test_index}",
-                type="primary" if phishing_selected else "secondary"
-            ):
-                st.session_state[choice_key] = "Phishing"
-                rerun_app()
+        if st.button(phishing_label, key=f"phishing_btn_{st.session_state.test_index}"):
+            set_test_choice("Phishing")
 
-        with b2:
-            if st.button(
-                t("Legitimate", "رسالة شرعية"),
-                key=f"legitimate_btn_{st.session_state.test_index}",
-                type="primary" if legitimate_selected else "secondary"
-            ):
-                st.session_state[choice_key] = "Legitimate"
-                rerun_app()
+        if st.button(legitimate_label, key=f"legitimate_btn_{st.session_state.test_index}"):
+            set_test_choice("Legitimate")
 
         reason = st.text_area(
             t("Why?", "لماذا؟"),
@@ -761,9 +710,8 @@ def post_test_page():
                 ))
                 return
 
-            selected_answer = choice
             correct_answer = item["correct_answer"]
-            is_correct = selected_answer == correct_answer
+            is_correct = choice == correct_answer
 
             st.session_state.responses.append({
                 "participant_id": st.session_state.participant_id,
@@ -772,7 +720,7 @@ def post_test_page():
                 "role": st.session_state.role,
                 "question_number": st.session_state.test_index + 1,
                 "image": item["image"],
-                "selected_answer": selected_answer,
+                "selected_answer": choice,
                 "correct_answer": correct_answer,
                 "is_correct": is_correct,
                 "reason": reason
