@@ -166,18 +166,34 @@ def apply_global_style():
     st.markdown(
         f"""
         <style>
-        #MainMenu, footer, header {{
-            visibility: hidden !important;
-            display: none !important;
-        }}
-
+        /* Hide Streamlit default UI */
+        #MainMenu,
+        footer,
+        header,
         [data-testid="stToolbar"],
         [data-testid="stDecoration"],
         [data-testid="stStatusWidget"],
+        [data-testid="stHeader"],
+        [data-testid="stFooter"],
+        [data-testid="stDeployButton"],
+        .stDeployButton,
         .viewerBadge_container__1QSob,
-        .styles_viewerBadge__1yB5_,
         .viewerBadge_link__1S137,
-        a[href*="github.com"] {{
+        .styles_viewerBadge__1yB5_,
+        .viewerBadge_container,
+        .viewerBadge_link,
+        .viewerBadge,
+        a[href*="github.com"],
+        a[href*="streamlit.io"] {{
+            display: none !important;
+            visibility: hidden !important;
+            opacity: 0 !important;
+            height: 0 !important;
+            width: 0 !important;
+            pointer-events: none !important;
+        }}
+
+        iframe {{
             display: none !important;
             visibility: hidden !important;
             opacity: 0 !important;
@@ -186,77 +202,80 @@ def apply_global_style():
         }}
 
         .stApp {{
-            background: linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 100%);
+            background: linear-gradient(180deg, #F7F9FC 0%, #FFFFFF 100%) !important;
             direction: {direction};
         }}
 
         .block-container {{
-            padding-top: 2rem;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            max-width: 1120px;
+            padding-top: 2rem !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            max-width: 1120px !important;
         }}
 
         h1, h2, h3, h4, p, label, div, span {{
             text-align: {align};
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            color: #111827;
-            opacity: 1;
+            overflow-wrap: break-word !important;
+            word-wrap: break-word !important;
+            color: #111827 !important;
+            opacity: 1 !important;
         }}
 
         img {{
             max-width: 100% !important;
             height: auto !important;
+            opacity: 1 !important;
+            filter: none !important;
+            -webkit-filter: none !important;
         }}
 
         .main-title {{
             color: #123B73 !important;
-            font-size: clamp(1.7rem, 5vw, 2.4rem);
-            font-weight: 800;
-            line-height: 1.3;
-            margin-bottom: 0.8rem;
+            font-size: clamp(1.7rem, 5vw, 2.4rem) !important;
+            font-weight: 800 !important;
+            line-height: 1.3 !important;
+            margin-bottom: 0.8rem !important;
         }}
 
         .intro-text {{
             color: #475569 !important;
-            font-size: clamp(0.95rem, 3.5vw, 1.05rem);
-            line-height: 1.7;
-            max-width: 850px;
+            font-size: clamp(0.95rem, 3.5vw, 1.05rem) !important;
+            line-height: 1.7 !important;
+            max-width: 850px !important;
         }}
 
         .welcome-card {{
-            background: #FFFFFF;
-            border: 1px solid #E3EAF3;
-            border-radius: 20px;
-            padding: 2rem 2.2rem;
-            box-shadow: 0 8px 28px rgba(18, 59, 115, 0.08);
-            margin-top: 1rem;
+            background: #FFFFFF !important;
+            border: 1px solid #E3EAF3 !important;
+            border-radius: 20px !important;
+            padding: 2rem 2.2rem !important;
+            box-shadow: 0 8px 28px rgba(18, 59, 115, 0.08) !important;
+            margin-top: 1rem !important;
         }}
 
         .section-label {{
             color: #123B73 !important;
-            font-weight: 700;
-            font-size: 1.15rem;
-            margin-top: 1.2rem;
-            margin-bottom: 0.5rem;
+            font-weight: 700 !important;
+            font-size: 1.15rem !important;
+            margin-top: 1.2rem !important;
+            margin-bottom: 0.5rem !important;
         }}
 
         .helper-text {{
             color: #4B5563 !important;
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
+            font-size: 0.95rem !important;
+            margin-bottom: 1rem !important;
         }}
 
         .center-card {{
-            background: #FFFFFF;
-            border: 1px solid #E3EAF3;
-            border-radius: 20px;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 8px 28px rgba(18, 59, 115, 0.08);
+            background: #FFFFFF !important;
+            border: 1px solid #E3EAF3 !important;
+            border-radius: 20px !important;
+            padding: 2.5rem 2rem !important;
+            box-shadow: 0 8px 28px rgba(18, 59, 115, 0.08) !important;
             text-align: center !important;
-            max-width: 760px;
-            margin: 2rem auto 1.5rem auto;
+            max-width: 760px !important;
+            margin: 2rem auto 1.5rem auto !important;
         }}
 
         .center-card * {{
@@ -264,40 +283,41 @@ def apply_global_style():
         }}
 
         .icon-large {{
-            font-size: 3rem;
-            margin-bottom: 0.8rem;
+            font-size: 3rem !important;
+            margin-bottom: 0.8rem !important;
         }}
 
         .completion-title {{
             color: #123B73 !important;
-            font-size: clamp(1.3rem, 5vw, 1.7rem);
-            font-weight: 800;
-            margin-bottom: 0.5rem;
+            font-size: clamp(1.3rem, 5vw, 1.7rem) !important;
+            font-weight: 800 !important;
+            margin-bottom: 0.5rem !important;
         }}
 
         .completion-text {{
             color: #475569 !important;
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 1.05rem !important;
+            line-height: 1.7 !important;
         }}
 
         .privacy-box {{
-            background: #FFFFFF;
-            border: 1px solid #CBD5E1;
-            border-radius: 14px;
-            padding: 1rem 1.3rem;
-            max-width: 760px;
-            margin: 1rem auto;
+            background: #FFFFFF !important;
+            border: 1px solid #CBD5E1 !important;
+            border-radius: 14px !important;
+            padding: 1rem 1.3rem !important;
+            max-width: 760px !important;
+            margin: 1rem auto !important;
             color: #334155 !important;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            box-shadow: 0 4px 16px rgba(18, 59, 115, 0.05);
+            font-size: 0.95rem !important;
+            line-height: 1.6 !important;
+            box-shadow: 0 4px 16px rgba(18, 59, 115, 0.05) !important;
         }}
 
         .privacy-box * {{
             text-align: center !important;
         }}
 
+        /* Buttons */
         .stButton > button {{
             background-color: #FFFFFF !important;
             color: #111827 !important;
@@ -307,11 +327,13 @@ def apply_global_style():
             font-weight: 600 !important;
             white-space: normal !important;
             min-height: 48px !important;
+            box-shadow: none !important;
         }}
 
         .stButton > button:hover {{
             border-color: #123B73 !important;
             color: #123B73 !important;
+            background-color: #F8FBFF !important;
         }}
 
         .stButton > button[kind="primary"] {{
@@ -320,6 +342,13 @@ def apply_global_style():
             border-color: #123B73 !important;
         }}
 
+        .stButton > button[kind="primary"]:hover {{
+            background-color: #0E2F5C !important;
+            color: #FFFFFF !important;
+            border-color: #0E2F5C !important;
+        }}
+
+        /* Radio: make options readable and remove weird dark mobile styling */
         .stRadio label,
         .stRadio div,
         .stRadio span,
@@ -331,19 +360,39 @@ def apply_global_style():
             opacity: 1 !important;
         }}
 
+        div[role="radiogroup"] {{
+            gap: 0.65rem !important;
+        }}
+
         div[role="radiogroup"] label {{
             background: #FFFFFF !important;
             border: 1px solid #CBD5E1 !important;
             border-radius: 12px !important;
             padding: 0.8rem 1rem !important;
-            margin-bottom: 0.7rem !important;
+            margin-bottom: 0.65rem !important;
             width: 100% !important;
+            color: #111827 !important;
+            opacity: 1 !important;
+            box-shadow: none !important;
+        }}
+
+        div[role="radiogroup"] label * {{
+            color: #111827 !important;
+            opacity: 1 !important;
+        }}
+
+        div[role="radiogroup"] svg {{
+            color: #111827 !important;
+            fill: #111827 !important;
+            opacity: 1 !important;
         }}
 
         textarea {{
             min-height: 120px !important;
             color: #111827 !important;
             background-color: #FFFFFF !important;
+            border: 1px solid #CBD5E1 !important;
+            border-radius: 12px !important;
         }}
 
         input {{
@@ -360,7 +409,7 @@ def apply_global_style():
             }}
 
             .main-title {{
-                font-size: 2rem !important;
+                font-size: 1.9rem !important;
                 line-height: 1.35 !important;
             }}
 
@@ -370,7 +419,7 @@ def apply_global_style():
             }}
 
             .welcome-card {{
-                padding: 1.3rem !important;
+                padding: 1.25rem !important;
                 border-radius: 16px !important;
             }}
 
@@ -401,16 +450,16 @@ def apply_global_style():
             }}
 
             h1 {{
-                font-size: 1.9rem !important;
+                font-size: 1.75rem !important;
                 line-height: 1.35 !important;
             }}
 
             h2 {{
-                font-size: 1.5rem !important;
+                font-size: 1.45rem !important;
             }}
 
             h3 {{
-                font-size: 1.25rem !important;
+                font-size: 1.22rem !important;
             }}
 
             p, div, label, span {{
@@ -420,6 +469,16 @@ def apply_global_style():
 
             img {{
                 border-radius: 12px !important;
+                opacity: 1 !important;
+                filter: none !important;
+                -webkit-filter: none !important;
+            }}
+
+            .stImage,
+            [data-testid="stImage"] {{
+                opacity: 1 !important;
+                filter: none !important;
+                -webkit-filter: none !important;
             }}
         }}
         </style>
