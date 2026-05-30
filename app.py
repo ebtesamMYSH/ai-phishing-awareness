@@ -4,6 +4,7 @@ import os
 import time
 from datetime import datetime
 import pandas as pd
+import gspread
 
 st.set_page_config(
     page_title="AI Tutor Phishing Awareness Training",
@@ -62,6 +63,48 @@ def show_image(path):
         st.image(path, use_column_width=True)
 
 
+def get_google_worksheet():
+    credentials = dict(st.secrets["gcp_service_account"])
+    client = gspread.service_account_from_dict(credentials)
+    spreadsheet = client.open("phishing_responses")
+    return spreadsheet.sheet1
+
+
+def get_next_participant_id_from_sheet(worksheet):
+    try:
+        records = worksheet.get_all_records()
+        ids = []
+
+        for row in records:
+            pid = str(row.get("participant_id", "")).strip()
+            if pid.startswith("P"):
+                try:
+                    ids.append(int(pid.replace("P", "")))
+                except ValueError:
+                    pass
+
+        if not ids:
+            return "P001"
+
+        return f"P{max(ids) + 1:03d}"
+
+    except Exception:
+        return "P001"
+
+
+def append_row_to_google_sheet(row):
+    worksheet = get_google_worksheet()
+    headers = list(row.keys())
+
+    existing_values = worksheet.get_all_values()
+
+    if not existing_values:
+        worksheet.append_row(headers)
+
+    worksheet.append_row([row.get(header, "") for header in headers])
+    return True
+
+
 def get_next_participant_id(filename):
     if not os.path.exists(filename):
         return "P001"
@@ -91,13 +134,10 @@ def get_next_participant_id(filename):
 
 
 def save_participant_summary():
-    os.makedirs("participant_data", exist_ok=True)
-
-    csv_filename = "participant_data/all_participants_responses.csv"
-    excel_filename = "participant_data/all_participants_responses.xlsx"
+    worksheet = get_google_worksheet()
 
     if not st.session_state.participant_id:
-        st.session_state.participant_id = get_next_participant_id(csv_filename)
+        st.session_state.participant_id = get_next_participant_id_from_sheet(worksheet)
 
     responses = st.session_state.responses
 
@@ -137,20 +177,7 @@ def save_participant_summary():
     row["phishing_percentage"] = round((phishing_score_6 / 6) * 100, 2)
     row["legitimate_percentage"] = round((legitimate_score_4 / 4) * 100, 2)
 
-    new_row_df = pd.DataFrame([row])
-
-    if os.path.exists(csv_filename):
-        existing_df = pd.read_csv(csv_filename)
-        updated_df = pd.concat([existing_df, new_row_df], ignore_index=True)
-    else:
-        updated_df = new_row_df
-
-    updated_df.to_csv(csv_filename, index=False, encoding="utf-8-sig")
-
-    try:
-        updated_df.to_excel(excel_filename, index=False, engine="openpyxl")
-    except Exception:
-        pass
+    append_row_to_google_sheet(row)
 
 
 def apply_global_style():
